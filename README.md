@@ -11,13 +11,16 @@ PROCESS:
   - As the data was incomplete, additional variables were added called "UNKOWN" instead of removing those data values.
   - Used AI to generate the IF excel statement code to make the process easier than manually typing everything.
   - Used a correlation table to determine the most important factors that influenced the claim to be FRAUD.
+    
       -> Issues arised:
           - as the dataset is synthetic there were not enough strong correlations.
           - this led to the use of weakly correlating variables in the logistic regression model.
+
   RSTUDIO:
   - Used code to generate the logistic regression model through the glm function.
   - Learned how AIC indicated the effictiveness of a model.
   - Learned how to use the MASS library to find the best model through variables provided.
+    
       -> Issues arised:
           - the incident type variable was split into 4 categories. Single, Theft, Parked and Multi. The Parked split variable was so insignificant it resulted in R considering it as a colinear variable.
             As a result, two variables had to be omitted when implenting the logistic regression function. This I believe is due to the data results being synthetic.
