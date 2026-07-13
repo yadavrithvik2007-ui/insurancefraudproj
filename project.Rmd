@@ -180,19 +180,13 @@ summary(finalmodel)
 ```
 
 ```{r}
-### omitted | Variable Group        | Baseline     |
-| --------------------- | ------------ |
-  | Incident Severity     | `IS_MINOR`   |
-  | Collision Type        | `CT_FRONT`   |
-  | Incident Type         | `IT_MULTI`   |
-  | Authorities Contacted | `AC_NONE`    |
-  | Property Damage       | `PD_UNKNOWN` |
+### omitted IS_MINOR   CT_FRONT  IT_MULTI   AC_NONE PD_UNKNOWN 
   
- Equation =​−2.772+0.001763(months_as_customer)−0.02284(age)+0.00005995(policy_deductable)−0.0001762(policy_annual_premium)+0.00000009979(umbrella_limit)+0.3019(CT_REAR)−0.1702(CT_SIDE)+0.9798(CT_UNKNOWN)+0.1794(IT_SINGLE)−0.2424(IT_THEFT)+2.630(IS_MAJOR)+0.2365(IS_TOTAL)−0.6974(IS_TRIVIAL)+0.7293(AC_POLICE)+0.5889(AC_FIRE)+0.7714(AC_AMBULANCE)+1.006(AC_OTHER)−0.3136(PD_NO)+0.07627(witnesses)+0.000003721(total_claim_amount)​
+## Equation =​−2.772+0.001763(months_as_customer)−0.02284(age)+0.00005995(policy_deductable)−0.0001762(policy_annual_premium)+0.00000009979(umbrella_limit)+0.3019(CT_REAR)−0.1702(CT_SIDE)+0.9798(CT_UNKNOWN)+0.1794(IT_SINGLE)−0.2424(IT_THEFT)+2.630(IS_MAJOR)+0.2365(IS_TOTAL)−0.6974(IS_TRIVIAL)+0.7293(AC_POLICE)+0.5889(AC_FIRE)+0.7714(AC_AMBULANCE)+1.006(AC_OTHER)−0.3136(PD_NO)+0.07627(witnesses)+0.000003721(total_claim_amount)​
 ```
 
 ```{r}
-Predicted_value = 100*(1/(1+2.718281828459045235360287471352**(-Equation)))
+## Predicted_value = 100*(1/(1+2.718281828459045235360287471352**(-Equation)))
 ```
 
 ```{r}
