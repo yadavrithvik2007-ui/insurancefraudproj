@@ -1,0 +1,216 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(rsample)
+library(broom)
+library(readr)
+library(ggplot2)
+library(corrplot)
+library(readxl)
+Data_sheet <- read_excel("Data sheet.xlsx")
+Data_sheet2 <- read_excel("datasheet2.xlsx")
+```
+
+```{r}
+# Baseline : IS_MINOR +	CT_FRONT + AC_NONE  +	PD_UNKNOWN +	PR_UNKNOWN ++	IT_MULTI	
+
+model1 <- glm(fraud_reported ~ IS_MAJOR+	IS_TOTAL+	IS_TRIVIAL+	CT_REAR+	CT_SIDE+	CT_UNKNOWN+	months_as_customer+	number_of_vehicles_involved+	witnesses+	AC_POLICE+	AC_FIRE	+AC_AMBULANCE	+	AC_OTHER+	IT_SINGLE+IT_PARKED+	IT_THEFT+	PD_YES+	PD_NO+	age+	PR_YES+	PR_NO+	total_claim_amount, family = binomial, Data_sheet)
+```
+
+```{r}
+summary(model1)
+```
+
+```{r}
+table(Data_sheet$IT_PARKED, Data_sheet$fraud_reported)
+alias(model1)
+```
+
+```{r}
+str(Data_sheet)
+
+
+sapply(Data_sheet, function(x) length(unique(x)))
+
+  
+model.matrix(model1) |> dim()
+
+
+
+qr(model.matrix(model1))$rank
+```
+
+```{r}
+model2 <- glm(
+  fraud_reported ~
+    IS_MAJOR + IS_TOTAL + IS_TRIVIAL +
+    CT_REAR + CT_SIDE + CT_UNKNOWN +
+    months_as_customer +
+    number_of_vehicles_involved +
+    witnesses +
+    AC_POLICE + AC_FIRE + AC_AMBULANCE + AC_OTHER +
+    IT_SINGLE + IT_THEFT +
+    PD_YES + PD_NO +
+    age +
+    PR_YES + PR_NO +
+    total_claim_amount,
+  family = binomial,
+  data = Data_sheet
+)
+```
+
+```{r}
+summary(model2)
+```
+
+```{r}
+library(MASS)
+
+best_model <- stepAIC(model1, direction = "both")
+summary(best_model)
+```
+
+```{r}
+model3 <- glm(
+    fraud_reported ~
+    IS_MAJOR +
+    IS_TOTAL +
+    IS_TRIVIAL +
+    CT_REAR +
+    CT_SIDE +
+    CT_UNKNOWN +
+    IT_SINGLE +
+    IT_THEFT +
+    AC_POLICE +
+    AC_FIRE +
+    AC_AMBULANCE +
+    AC_OTHER +
+    PD_NO +
+    umbrella_limit +
+    months_as_customer +
+    age +
+    policy_deductable +
+    policy_annual_premium +
+    witnesses +
+    total_claim_amount,
+  
+  family = binomial,
+  data = Data_sheet2)
+```
+
+```{r}
+summary(model3)
+```
+
+```{r}
+library(MASS)
+
+best_model2 <- stepAIC(model3, direction = "both")
+summary(best_model2)
+```
+
+```{r}
+model4 <- glm(fraud_reported ~
+                IS_MAJOR +
+                IS_TOTAL +
+                IS_TRIVIAL +
+                CT_REAR +
+                CT_SIDE +
+                CT_UNKNOWN +
+                IT_SINGLE +
+                IT_THEFT +
+                AC_POLICE +
+                AC_FIRE +
+                AC_AMBULANCE +
+                AC_OTHER +
+                PD_NO +
+                umbrella_limit +
+                months_as_customer +
+                age +
+                policy_deductable +
+                policy_annual_premium +
+                witnesses +
+                total_claim_amount,family = binomial, Data_sheet2)
+
+best_model3 <- step(model4)
+
+summary(model4)      
+summary(best_model3)
+```
+
+```{r}
+finalmodel <- glm( fraud_reported ~
+                     months_as_customer +
+                     age +
+                     policy_deductable +
+                     policy_annual_premium +
+                     umbrella_limit +
+                     
+                     CT_REAR +
+                     CT_SIDE +
+                     CT_UNKNOWN +
+                     
+                     IT_SINGLE +
+                     IT_THEFT +
+                     
+                     IS_MAJOR +
+                     IS_TOTAL +
+                     IS_TRIVIAL +
+                     
+                     AC_POLICE +
+                     AC_FIRE +
+                     AC_AMBULANCE +
+                     AC_OTHER +
+                     
+                     PD_NO +
+                     
+                     witnesses +
+                     total_claim_amount,
+                   
+                   family = binomial(link = "logit"),
+                   data = Data_sheet2)
+summary(finalmodel)
+
+
+```
+
+```{r}
+### omitted | Variable Group        | Baseline     |
+| --------------------- | ------------ |
+  | Incident Severity     | `IS_MINOR`   |
+  | Collision Type        | `CT_FRONT`   |
+  | Incident Type         | `IT_MULTI`   |
+  | Authorities Contacted | `AC_NONE`    |
+  | Property Damage       | `PD_UNKNOWN` |
+  
+ Equation =​−2.772+0.001763(months_as_customer)−0.02284(age)+0.00005995(policy_deductable)−0.0001762(policy_annual_premium)+0.00000009979(umbrella_limit)+0.3019(CT_REAR)−0.1702(CT_SIDE)+0.9798(CT_UNKNOWN)+0.1794(IT_SINGLE)−0.2424(IT_THEFT)+2.630(IS_MAJOR)+0.2365(IS_TOTAL)−0.6974(IS_TRIVIAL)+0.7293(AC_POLICE)+0.5889(AC_FIRE)+0.7714(AC_AMBULANCE)+1.006(AC_OTHER)−0.3136(PD_NO)+0.07627(witnesses)+0.000003721(total_claim_amount)​
+```
+
+```{r}
+Predicted_value = 100*(1/(1+2.718281828459045235360287471352**(-Equation)))
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
