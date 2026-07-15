@@ -35,6 +35,7 @@ PROCESS:
 LIMITATIONS:
   - The dataset was for AMERICAN banks, this makes it not as relavent to Australian banks.
   - An attempt was made to find Australian banking data however that is not publically available.
+  - The model variables used for the predictions is not the statistically best model. The statistically best model felt incomplete and required only specific values. Extra variables have been included to maintain a feeling of accuracy when inputting more data.
 
 FUTURE CONSIDERATIONS:
   - Use the factor function and compelte majority of data sorting in RSTUDIO
